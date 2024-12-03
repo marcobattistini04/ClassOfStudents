@@ -3,9 +3,9 @@ package model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-public class StudentCollection {
+public class StudentCollection implements java.io.Serializable{
+    private static final long serialVersionUID = 1635142637382L;
     private Map<Integer, Student> students = new HashMap<>();
 
     public void addStudent(int id, String name, String sur, int immYear, List<String> grades) {
@@ -31,8 +31,8 @@ public class StudentCollection {
             students.get(id).addGrade(grades);
     }
 
-    public Set<Map.Entry<Integer, Student>> getStudents() {
-        return this.students.entrySet();
+    public Map<Integer, Student> getStudents() {
+        return this.students;
     }
 
     public boolean isEmpty() {

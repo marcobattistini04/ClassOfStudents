@@ -3,7 +3,8 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
+public class Student implements java.io.Serializable{
+    private static final long serialVersionUID = 567742502623265945L;
     private final String  name;
     private final String  surname;
     private final int immatriculationYear;
@@ -31,8 +32,11 @@ public class Student {
         return this.immatriculationYear;
     }
 
+    /* DO NOT USE LIST.COPYOF() beacuse it would throw Unsupported operationException() */
     public List<String> getActualGrades() {
-        return List.copyOf(this.grades);
+        List<String> actualGrades = new ArrayList<>();
+        actualGrades.addAll(this.grades); 
+        return actualGrades;
     }
 
 }

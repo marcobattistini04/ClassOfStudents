@@ -47,8 +47,8 @@ public class RemoveView {
          "Error..", JOptionPane.ERROR_MESSAGE);
     }
 
-    public void showConfirmMessage() {
-        JOptionPane.showMessageDialog(frame, "Student removed correctly", "OK", JOptionPane.INFORMATION_MESSAGE);
+    public void showConfirmMessage(final String message) {
+        JOptionPane.showMessageDialog(frame, message, "OK", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void display() {
