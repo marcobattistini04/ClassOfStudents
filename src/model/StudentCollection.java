@@ -32,7 +32,9 @@ public class StudentCollection implements java.io.Serializable{
     }
 
     public Map<Integer, Student> getStudents() {
-        return this.students;
+        Map<Integer, Student> defensiveCopy = new HashMap<>();
+        defensiveCopy.putAll(this.students);
+        return defensiveCopy;
     }
 
     public boolean isEmpty() {

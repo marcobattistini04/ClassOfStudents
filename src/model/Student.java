@@ -34,9 +34,9 @@ public class Student implements java.io.Serializable{
 
     /* DO NOT USE LIST.COPYOF() beacuse it would throw Unsupported operationException() */
     public List<String> getActualGrades() {
-        List<String> actualGrades = new ArrayList<>();
-        actualGrades.addAll(this.grades); 
-        return actualGrades;
+        List<String> defensiveCopy = new ArrayList<>();
+        defensiveCopy.addAll(this.grades); 
+        return defensiveCopy;
     }
 
 }

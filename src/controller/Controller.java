@@ -130,6 +130,7 @@ public class Controller {
 
     public void notifySaved () throws IOException {
             fmanager.writeObject(model.getStudents());
+            this.classModified = false;
         }
 
     public Boolean isClassModified () {
