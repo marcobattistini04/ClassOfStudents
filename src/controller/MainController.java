@@ -1,13 +1,9 @@
 package controller;
 
-import java.util.Map;
-import java.util.Set;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
 
 import model.FileIO;
-import model.Student;
 import model.StudentCollection;
 import view.AddView;
 import view.MainView;
@@ -33,6 +29,8 @@ public class MainController {
         this.model = new StudentCollection();
         this.fmanager = new FileIO();
         this.addController = new AddController(model);
+        this.removeController = new RemoveController(model);
+        this.showController = new ShowController(model);
 
         this.addController.manageAddingInitStudents(fmanager);
     }
@@ -64,15 +62,11 @@ public class MainController {
     }
 
     public void notifyDeleteStudent(int id) {
-        if(model.isPresent(id)) {
-            model.removeStudent(id);
-            this.removeView.showConfirmMessage("Student removed correctly");
+        if (this.removeController.manageRemoveStudent(this.removeView, id)) {
             this.classModified = true;
-            if (model.isEmpty()) {
+            if (this.model.isEmpty()) {
                 this.mainView.lockButtons();
             }
-        } else {
-            this.removeView.showError("Cannot remove any student with ID: " + id);
         }
     }
 
@@ -82,18 +76,7 @@ public class MainController {
     }
 
     public void notifyShowStudents() {
-        final Set<Map.Entry<Integer, Student>> students = model.getStudents().entrySet();
-        Iterator<Map.Entry<Integer, Student>> iter = students.iterator();
-        Map.Entry<Integer, Student> entry;
-      
-
-        this.showView.clear();
-
-        while (iter.hasNext()) {
-            entry = iter.next();
-            this.showView.printStudent(entry.getKey(), entry.getValue().getName(), 
-            entry.getValue().getSurname(), entry.getValue().getImmatriculationYear(), entry.getValue().getActualGrades());
-        }
+        this.showController.manageShowingAllStudents(this.showView);
     }
 
     public void notifySaved () throws IOException {
