@@ -46,7 +46,7 @@ public class ShowView {
     public void clear() {
         this.textArea.setText("");
     }
-    public void printStudent(final int id, final String name, final String surname, final int immYear, final List<String> grades) {
+    public void printStudent(final int id, final String name, final String surname, final int immYear, final List<String> grades, final double average) {
         this.textArea.append("\n  Student ID: " + id);
         this.textArea.append("\n  Name: " + name);
         this.textArea.append("\n  Surname: " + surname);
@@ -55,6 +55,7 @@ public class ShowView {
         for (final String grade : grades) {
             this.textArea.append("  " + grade);
         }
+        this.textArea.append("\n  Average: " + String.format("%.2f", average) + "\n");
         this.textArea.append("\n\n");
     }
 
