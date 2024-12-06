@@ -13,14 +13,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import controller.Controller;
+import controller.MainController;
 
 public class ShowView {
     private static final int SIZE = 3;
     private final JFrame frame = new JFrame();
     final JTextArea textArea = new JTextArea();
 
-    public ShowView(Controller controller) {
+    public ShowView(MainController controller) {
         final JTextField title = new JTextField("Press SHOW to view all the students registered so far..");
         title.setEditable(false);
 

@@ -11,14 +11,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.Controller;
+import controller.MainController;
 
 public class RemoveView {
     private final JFrame frame = new JFrame(" Remove a Student..");
-    private final Controller controller;
+    private final MainController controller;
     private static final int SIZE = 5;
 
-    public RemoveView(final Controller contr) {
+    public RemoveView(final MainController contr) {
         this.controller = contr;
         final JTextField info = new JTextField();
         info.setEditable(false);

@@ -13,15 +13,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import controller.Controller;
+import controller.MainController;
 
 public class AddView {
     private final JFrame frame = new JFrame(" Add a Student..");
     final JTextField[] textFields;
-    private final Controller controller;
+    private final MainController controller;
     private static final int SIZE = 4;
 
-    public AddView(final Controller contr) {
+    public AddView(final MainController contr) {
         this.controller = contr;
         final JPanel table = new JPanel();
         this.textFields = new JTextField[5];

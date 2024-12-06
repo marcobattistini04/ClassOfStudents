@@ -7,7 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import controller.Controller;
+import controller.MainController;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -25,8 +25,8 @@ public class MainView {
     private final JButton students;
     private final JButton remove;
     private final JButton save;
-    private final Controller controller;
-        public MainView(final Controller contr) {
+    private final MainController controller;
+        public MainView(final MainController contr) {
         this.controller = contr;
 
         final JPanel panel = new JPanel();

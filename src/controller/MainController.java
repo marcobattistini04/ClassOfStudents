@@ -1,11 +1,9 @@
 package controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import model.FileIO;
@@ -16,32 +14,27 @@ import view.MainView;
 import view.RemoveView;
 import view.ShowView;
 
-public class Controller {
-    private boolean classModified = false;
+public class MainController {
+    private AddController addController;
+    private ShowController showController;
+    private RemoveController removeController;
+
     private MainView mainView;
-    private  AddView addView;
-    private  ShowView showView;
+    private AddView addView;
+    private ShowView showView;
     private RemoveView removeView;
+
     private final StudentCollection model;
     final private FileIO fmanager;
 
-    public Controller() throws FileNotFoundException, IOException, ClassNotFoundException {
+    private boolean classModified = false;
+
+    public MainController() throws FileNotFoundException, IOException, ClassNotFoundException {
         this.model = new StudentCollection();
         this.fmanager = new FileIO();
+        this.addController = new AddController(model);
 
-        final Map<Integer, Student> listOfStudents = this.fmanager.readObjects();
-        if( listOfStudents != null) {
-            final Set<Map.Entry<Integer, Student>> students = listOfStudents.entrySet();
-            Iterator<Map.Entry<Integer, Student>> iter = students.iterator();
-            Map.Entry<Integer, Student> entry;
-
-            while (iter.hasNext()) {
-                entry = iter.next();
-                
-                this.model.addStudent(entry.getKey(), entry.getValue().getName(),
-                entry.getValue().getSurname(), entry.getValue().getImmatriculationYear(), entry.getValue().getActualGrades());
-            }
-        }  
+        this.addController.manageAddingInitStudents(fmanager);
     }
 
     public void attachMainView(MainView view) {
@@ -54,39 +47,14 @@ public class Controller {
     }
 
     public void notifyAddStudent(final int id, final String name, final String surname, final int immYear, final String grades) {
-        List<String> list = new ArrayList<>();
-
-        if(model.verifyStudent(id, name, surname)) {
-            if(grades.isEmpty()) {
-                model.addStudent(id, name, surname, immYear, list);
-            } else {
-                String[] words = grades.split(" ");
-                for (final String word : words) {
-                    list.addFirst(word);
-                }
-            }
-                model.addStudent(id, name, surname, immYear, list);
-                addView.showConfirmMessage("Student added correctly");
-                mainView.unlockButtons();
-                this.classModified = true;
-            
-        } else {
-            if (!name.isEmpty() && !surname.isEmpty()) {
-                addView.showDuplicateMessage("This student is already present. Do you want to add new Grades?");
-            } else {
-                addView.showError("Cannot add new student because of invalid entrans");
-            } 
-        }
+       if (this.addController.manageAddingStudent(this.addView, id, name, surname, immYear, grades)) {
+            this.classModified = true;
+            this.mainView.unlockButtons();
+       }
     }
 
     public void notifyAddGrades(final int id, final String grades) {
-        List<String> list = new ArrayList<>();
-        String[] words = grades.split(" ");
-        for (final String word : words) {
-            list.addFirst(word);
-        }
-        model.addGradeForStudent(id, list);
-        addView.showConfirmMessage("grades added correctly");
+        this.addController.manageAggingGrades(this.addView, id, grades);
         this.classModified = true;
     }
 
