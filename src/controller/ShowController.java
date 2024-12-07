@@ -23,7 +23,7 @@ public class ShowController {
         Map.Entry<Integer, Student> entry;
         int sum = 0;
         int cont = 0;
-        double medium;
+        double medium = 0.0;
 
         showView.clear();
 
@@ -43,9 +43,15 @@ public class ShowController {
                     }
                 }
             }
-            medium = (double) sum /cont;
+
+            if(! entry.getValue().getActualGrades().isEmpty()) {
+                medium = (double) sum /cont;
+            }
             showView.printStudent(entry.getKey(), entry.getValue().getName(), 
             entry.getValue().getSurname(), entry.getValue().getImmatriculationYear(), entry.getValue().getActualGrades(), medium);
+            sum = 0;
+            cont = 0;
+            medium = 0.0;
         }
     }
 }

@@ -52,7 +52,7 @@ public class MainController {
     }
 
     public void notifyAddGrades(final int id, final String grades) {
-        this.addController.manageAggingGrades(this.addView, id, grades);
+        this.addController.manageAddingGrades(this.addView, id, grades);
         this.classModified = true;
     }
 

@@ -39,12 +39,15 @@ public class AddController {
         List<String> list = new ArrayList<>();
 
         if(model.verifyStudent(id, name, surname)) {
-            if(grades.isEmpty()) {
-                model.addStudent(id, name, surname, immYear, list);
-            } else {
+            if(!grades.isEmpty()){
                 String[] words = grades.split(" ");
-                for (final String word : words) {
-                    list.addFirst(word);
+                if(areGradesConsistent(words)) {
+                    for (final String word : words) {
+                        list.addFirst(word);
+                    }
+                } else {
+                    addView.showError("Cannot add new student because of invalid Grades");
+                    return false;
                 }
             }
                 model.addStudent(id, name, surname, immYear, list);
@@ -56,20 +59,42 @@ public class AddController {
                 addView.showDuplicateMessage("This student is already present. Do you want to add new Grades?");
                
             } else {
-                addView.showError("Cannot add new student because of invalid entrans");
+                addView.showError("Please, add valid grades to the student");
             }  
             return false;
         }
     }
 
-    public boolean manageAggingGrades(final AddView addView, final int id, final String grades) {
+    public boolean manageAddingGrades(final AddView addView, final int id, final String grades) {
         List<String> list = new ArrayList<>();
         String[] words = grades.split(" ");
-        for (final String word : words) {
-            list.addFirst(word);
+        if(areGradesConsistent(words)) {
+            for (final String word : words) {
+                list.addFirst(word);
+            }
+        } else {
+            addView.showError("Pleae, add valid grades to the student");
+            return false;
         }
         this.model.addGradeForStudent(id, list);
         addView.showConfirmMessage("grades added correctly");
         return true;
     }
+
+    private boolean areGradesConsistent(String [] grades) {
+        boolean consistent = true;
+        int cont = 0;
+        while (cont < grades.length && consistent) {
+            try {
+                Integer.parseInt(grades[cont]);
+            } catch (NumberFormatException ex) {
+                if (!grades[cont].equals("30L") && !grades[cont].equals("R")) {
+                    consistent = false;
+                }
+            }
+            cont ++;
+        }
+        return consistent;
+    }
 }
+
