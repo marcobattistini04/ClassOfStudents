@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +13,11 @@ public class StudentCollection implements java.io.Serializable{
         students.put(id, new Student(name, sur, immYear, grades));
     }
 
-    public boolean verifyStudent(final int id, final String name, final String surname) {
+    public boolean verifyStudent(final int id, final int immYear, final String name, final String surname) {
         if( (!name.isEmpty() && !surname.isEmpty()) && !students.containsKey(id)) {
-            return true;
+            if(!name.equals(surname) && !name.isEmpty() && !surname.isEmpty() && immYear <= LocalDate.now().getYear()) {
+                return true;
+            }
         }
         return false;
     }

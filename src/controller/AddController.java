@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +39,7 @@ public class AddController {
     public boolean manageAddingStudent(final AddView addView, final int id, final String name, final String surname, final int immYear, final String grades) {
         List<String> list = new ArrayList<>();
 
-        if(model.verifyStudent(id, name, surname)) {
+        if(model.verifyStudent(id, immYear, name, surname)) {
             if(!grades.isEmpty()){
                 String[] words = grades.split(" ");
                 if(areGradesConsistent(words)) {
@@ -55,13 +56,17 @@ public class AddController {
                 return true;
             
         } else {
-            if (!name.isEmpty() && !surname.isEmpty()) {
-                addView.showDuplicateMessage("This student is already present. Do you want to add new Grades?");
-               
+           if (name.isEmpty() || surname.isEmpty() || name.equals(surname)) {
+            addView.showError("Please, add valid Name and Surname");
+           } else {
+            if (immYear > LocalDate.now().getYear()) {
+                addView.showError("Please, add a valid Immatriculation Year");
             } else {
-                addView.showError("Please, add valid grades to the student");
-            }  
-            return false;
+                addView.showDuplicateMessage("The student is already present, do you want to add new Grades?");
+            }
+           }
+
+           return false;
         }
     }
 
