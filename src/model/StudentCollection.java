@@ -15,7 +15,7 @@ public class StudentCollection implements java.io.Serializable{
 
     public boolean verifyStudent(final int id, final int immYear, final String name, final String surname) {
         if( (!name.isEmpty() && !surname.isEmpty()) && !students.containsKey(id)) {
-            if(!name.equals(surname) && !name.isEmpty() && !surname.isEmpty() && immYear <= LocalDate.now().getYear()) {
+            if(!name.equals(surname) && immYear <= LocalDate.now().getYear()) {
                 return true;
             }
         }
